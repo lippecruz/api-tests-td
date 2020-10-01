@@ -31,8 +31,15 @@ def test_get_activities_attributes():
 def test_get_activity_by_id():
      response = requests.get(helper.base_url + "/2")
      first_activity = response.json()
+
+     assert response.status_code == 200
      
      assert first_activity["ID"] == 2
      assert first_activity["Title"] == 'Activity 2'
      assert re.match(helper.pattern_date_time, first_activity["DueDate"])
      assert first_activity["Completed"] == True
+
+def test_get_activity_wiyh_invalid_id_status_code_equals_400():
+     response = requests.get(helper.base_url + "/a")
+
+     assert response.status_code == 400
